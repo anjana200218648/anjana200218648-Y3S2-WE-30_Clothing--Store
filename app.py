@@ -1,32 +1,27 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, request, jsonify, render_template
 import pandas as pd
 import os
+import pickle
 from werkzeug.utils import secure_filename
-from statsmodels.tsa.arima.model import ARIMA
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'uploads'
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
-DB_FILE = 'sales_data.csv'
-if not os.path.exists(DB_FILE):
-    pd.DataFrame(columns=['Month', 'Sales']).to_csv(DB_FILE, index=False)
+# 🔹 Load trained model
+MODEL_FILE = "sales_forecast_model.pkl"
+if os.path.exists(MODEL_FILE):
+    with open(MODEL_FILE, "rb") as f:
+        model = pickle.load(f)
+else:
+    model = None
 
-# 🔹 Serve the frontend
+# 🔹 Home Route - Show Upload Page
 @app.route('/')
 def home():
-    return render_template('index.html')
+    return render_template('upload.html')
 
-# 🔹 Function to Train ARIMA Model
-def train_arima_model(data):
-    data['Month'] = pd.date_range(start='1/1/2020', periods=len(data), freq='M')
-    data.set_index('Month', inplace=True)
-    model = ARIMA(data['Sales'], order=(5,1,0))  
-    fitted_model = model.fit()
-    forecast = fitted_model.forecast(steps=1)
-    return forecast[0]
-
-# 🔹 Upload CSV and Process Data
+# 🔹 File Upload API
 @app.route('/upload', methods=['POST'])
 def upload_file():
     if 'file' not in request.files:
@@ -42,17 +37,27 @@ def upload_file():
 
     try:
         df_new = pd.read_csv(filepath)
-        if 'Sales' not in df_new.columns:
-            return jsonify({'error': 'CSV must contain a Sales column'}), 400
-        
-        df_existing = pd.read_csv(DB_FILE)
-        df_combined = pd.concat([df_existing, df_new], ignore_index=True)
-        df_combined.to_csv(DB_FILE, index=False)  
 
-        prediction = train_arima_model(df_combined)
-        return jsonify({'prediction': prediction, 'message': 'File uploaded successfully!'})
+        # 🔹 Fix: Convert "Total Amount" -> "Sales"
+        if 'Sales' not in df_new.columns:
+            if 'Total Amount' in df_new.columns:
+                df_new.rename(columns={'Total Amount': 'Sales'}, inplace=True)
+            else:
+                return jsonify({'error': 'CSV must contain a Sales or Total Amount column'}), 400
+
+        df_existing = pd.read_csv("sales_data.csv")
+        df_combined = pd.concat([df_existing, df_new], ignore_index=True)
+        df_combined.to_csv("sales_data.csv", index=False)  
+
+        if model:
+            prediction = model.forecast(steps=1)[0]
+        else:
+            prediction = "Model not trained yet"
+
+        return render_template('upload.html', message="File uploaded successfully!",
+                               prediction=prediction, data=df_combined.to_dict(orient='records'))
     except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        return render_template('upload.html', error=str(e))
 
 if __name__ == '__main__':
     app.run(debug=True)

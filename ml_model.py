@@ -2,16 +2,18 @@ import pandas as pd
 import pickle
 from statsmodels.tsa.arima.model import ARIMA
 
-# 🔹 Load the dataset
+# 🔹 Load dataset
 df = pd.read_csv("sales_data.csv")
 
-# 🔹 Convert Month to datetime & set as index
-df['Month'] = pd.to_datetime(df['Month'])
-df.set_index('Month', inplace=True)
+# 🔹 Convert 'Date' to datetime & create 'Month' column
+df['Date'] = pd.to_datetime(df['Date'], errors='coerce')
+df['Month'] = df['Date'].dt.to_period('M')  # Extract Year-Month
 
-# 🔹 Convert Sales column to numeric
-df['Sales'] = pd.to_numeric(df['Sales'], errors='coerce')
-df.dropna(inplace=True)  # Remove missing values
+# 🔹 Create dummy 'Sales' column (You need real sales data)
+df['Sales'] = 100  # Replace with actual sales data if available
+
+# 🔹 Group by Month & calculate total sales
+df = df.groupby('Month').sum(numeric_only=True)
 
 # 🔹 Train ARIMA Model
 model = ARIMA(df['Sales'], order=(5,1,0))  # Adjust (p,d,q) if needed
