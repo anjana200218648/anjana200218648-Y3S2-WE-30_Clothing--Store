@@ -3,27 +3,58 @@ import pandas as pd
 import os
 import pickle
 from werkzeug.utils import secure_filename
+from statsmodels.tsa.arima.model import ARIMA
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'uploads'
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
-# 🔹 Load trained model
 MODEL_FILE = "sales_forecast_model.pkl"
-if os.path.exists(MODEL_FILE):
-    with open(MODEL_FILE, "rb") as f:
-        model = pickle.load(f)
-else:
-    model = None
+DATA_FILE = "sales_data.csv"
 
-# 🔹 Home Route - Show Upload Page
+# 🔹 Load trained model if exists
+def load_model():
+    if os.path.exists(MODEL_FILE):
+        with open(MODEL_FILE, "rb") as f:
+            print("✅ Model Found & Loaded")  # Debugging message
+            return pickle.load(f)
+    print("❌ Model Not Found! Training new model...")  # Debugging message
+    return None
+
+model = load_model()
+
+# 🔹 Train model function
+def train_model():
+    df = pd.read_csv(DATA_FILE)
+
+    # 🔹 Convert 'Date' to datetime & create 'Month' column
+    df['Date'] = pd.to_datetime(df['Date'], errors='coerce')
+    df['Month'] = df['Date'].dt.to_period('M')
+
+    # 🔹 Group by Month & calculate total sales
+    df = df.groupby('Month').sum(numeric_only=True)
+
+    # 🔹 Train ARIMA Model
+    arima_model = ARIMA(df['Sales'], order=(5,1,0))  # Adjust (p,d,q) if needed
+    fitted_model = arima_model.fit()
+
+    # 🔹 Save trained model
+    with open(MODEL_FILE, "wb") as f:
+        pickle.dump(fitted_model, f)
+
+    print("✅ Model Retrained Successfully!")
+    return fitted_model
+
+# 🔹 Home Route
 @app.route('/')
 def home():
     return render_template('upload.html')
 
-# 🔹 File Upload API
+# 🔹 File Upload & Model Retrain
 @app.route('/upload', methods=['POST'])
 def upload_file():
+    global model  # Ensure we're using the correct global model
+
     if 'file' not in request.files:
         return jsonify({'error': 'No file part'}), 400
 
@@ -45,14 +76,20 @@ def upload_file():
             else:
                 return jsonify({'error': 'CSV must contain a Sales or Total Amount column'}), 400
 
-        df_existing = pd.read_csv("sales_data.csv")
+        df_existing = pd.read_csv(DATA_FILE)
         df_combined = pd.concat([df_existing, df_new], ignore_index=True)
-        df_combined.to_csv("sales_data.csv", index=False)  
+        df_combined.to_csv(DATA_FILE, index=False)
 
-        if model:
+        # 🔹 Retrain Model with Updated Data
+        model = train_model()
+
+        # 🔹 Predict next month's sales
+        try:
             prediction = model.forecast(steps=1)[0]
-        else:
-            prediction = "Model not trained yet"
+            print("🔮 Prediction Successful:", prediction)  # Debugging message
+        except Exception as e:
+            print("❌ Prediction Error:", str(e))
+            prediction = "Error generating prediction"
 
         return render_template('upload.html', message="File uploaded successfully!",
                                prediction=prediction, data=df_combined.to_dict(orient='records'))
