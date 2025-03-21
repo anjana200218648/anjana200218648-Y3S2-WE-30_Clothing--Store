@@ -1,6 +1,8 @@
 body {
     background-color: #f8f9fa;
     font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
 .container {
@@ -8,6 +10,62 @@ body {
     margin: 100px auto;
     padding: 20px;
     background: white;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
+    text-align: center;
+}
+
+h1 {
+    color: #333;
+}
+
+.success {
+    color: green;
+}
+
+.error {
+    color: red;
+}
+
+.file-upload {
+    position: relative;
+    margin: 20px 0;
+}
+
+.file-upload input[type="file"] {
+    display: none;
+}
+
+.file-label {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.file-label:hover {
+    background-color: #0056b3;
+}
+
+.btn {
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: #218838;
+}
+
+.prediction {
+    margin-top: 20px;
+    font-size: 1.5em;
+    color: #333;
 }
