@@ -9,52 +9,59 @@ app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'uploads'
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
-MODEL_FILE = "sales_forecast_model.pkl"
-DATA_FILE = "sales_data.csv"
+# 🔹 Ensure sales_data.csv exists
+if not os.path.exists("sales_data.csv"):
+    pd.DataFrame(columns=["Date", "Sales"]).to_csv("sales_data.csv", index=False)
 
-# 🔹 Load trained model if exists
-def load_model():
-    if os.path.exists(MODEL_FILE):
-        with open(MODEL_FILE, "rb") as f:
-            print("✅ Model Found & Loaded")  # Debugging message
-            return pickle.load(f)
-    print("❌ Model Not Found! Training new model...")  # Debugging message
-    return None
+# 🔹 Function to Train and Save the Model
+def train_and_save_model():
+    try:
+        df = pd.read_csv("sales_data.csv")
 
-model = load_model()
+        # 🔹 Convert 'Date' to datetime and create 'Month' column
+        df['Date'] = pd.to_datetime(df['Date'], errors='coerce')
+        df['Month'] = df['Date'].dt.to_period('M')  # Extract Year-Month
 
-# 🔹 Train model function
-def train_model():
-    df = pd.read_csv(DATA_FILE)
+        # 🔹 Ensure 'Sales' column is present
+        if 'Sales' not in df.columns:
+            if 'Total Amount' in df.columns:
+                df.rename(columns={'Total Amount': 'Sales'}, inplace=True)
+            else:
+                raise ValueError("Data must contain either 'Sales' or 'Total Amount' column.")
 
-    # 🔹 Convert 'Date' to datetime & create 'Month' column
-    df['Date'] = pd.to_datetime(df['Date'], errors='coerce')
-    df['Month'] = df['Date'].dt.to_period('M')
+        # 🔹 Group by 'Month' and calculate total sales
+        df = df.groupby('Month').sum(numeric_only=True)
 
-    # 🔹 Group by Month & calculate total sales
-    df = df.groupby('Month').sum(numeric_only=True)
+        # 🔹 Check for sufficient data variance
+        if df['Sales'].nunique() < 2:
+            print("⚠ Not enough data variance for training!")
+            return None  # Return None instead of error
 
-    # 🔹 Train ARIMA Model
-    arima_model = ARIMA(df['Sales'], order=(5,1,0))  # Adjust (p,d,q) if needed
-    fitted_model = arima_model.fit()
+        # 🔹 Train ARIMA Model
+        model = ARIMA(df['Sales'], order=(2, 1, 1))  # Adjusted order
+        fitted_model = model.fit()
 
-    # 🔹 Save trained model
-    with open(MODEL_FILE, "wb") as f:
-        pickle.dump(fitted_model, f)
+        # 🔹 Save the trained model
+        with open("sales_forecast_model.pkl", "wb") as f:
+            pickle.dump(fitted_model, f)
 
-    print("✅ Model Retrained Successfully!")
-    return fitted_model
+        print("✅ Model retrained and saved successfully!")
 
-# 🔹 Home Route
+        # 🔹 Predict next month's sales
+        forecast = fitted_model.forecast(steps=1)
+        return round(forecast[0], 2)  # Round prediction
+    except Exception as e:
+        print(f"Error training the model: {str(e)}")
+        return None  # Return None on failure
+
+# 🔹 Home Route - Show Upload Page
 @app.route('/')
 def home():
     return render_template('upload.html')
 
-# 🔹 File Upload & Model Retrain
+# 🔹 File Upload API - Handles File Upload and Model Training
 @app.route('/upload', methods=['POST'])
 def upload_file():
-    global model  # Ensure we're using the correct global model
-
     if 'file' not in request.files:
         return jsonify({'error': 'No file part'}), 400
 
@@ -69,30 +76,22 @@ def upload_file():
     try:
         df_new = pd.read_csv(filepath)
 
-        # 🔹 Fix: Convert "Total Amount" -> "Sales"
-        if 'Sales' not in df_new.columns:
-            if 'Total Amount' in df_new.columns:
-                df_new.rename(columns={'Total Amount': 'Sales'}, inplace=True)
-            else:
-                return jsonify({'error': 'CSV must contain a Sales or Total Amount column'}), 400
+        # 🔹 Rename "Total Amount" -> "Sales" if needed
+        if 'Sales' not in df_new.columns and 'Total Amount' in df_new.columns:
+            df_new.rename(columns={'Total Amount': 'Sales'}, inplace=True)
 
-        df_existing = pd.read_csv(DATA_FILE)
+        df_existing = pd.read_csv("sales_data.csv")
+
+        # 🔹 Combine new data with existing data
         df_combined = pd.concat([df_existing, df_new], ignore_index=True)
-        df_combined.to_csv(DATA_FILE, index=False)
+        df_combined.to_csv("sales_data.csv", index=False)
 
-        # 🔹 Retrain Model with Updated Data
-        model = train_model()
+        # 🔹 Retrain the model with the combined data
+        prediction = train_and_save_model()
 
-        # 🔹 Predict next month's sales
-        try:
-            prediction = model.forecast(steps=1)[0]
-            print("🔮 Prediction Successful:", prediction)  # Debugging message
-        except Exception as e:
-            print("❌ Prediction Error:", str(e))
-            prediction = "Error generating prediction"
-
-        return render_template('upload.html', message="File uploaded successfully!",
-                               prediction=prediction, data=df_combined.to_dict(orient='records'))
+        return render_template('upload.html', message="File uploaded and model retrained successfully!",
+                               prediction=prediction if prediction is not None else "Prediction not available due to insufficient data variance.",
+                               data=df_combined.to_dict(orient='records'))
     except Exception as e:
         return render_template('upload.html', error=str(e))
 

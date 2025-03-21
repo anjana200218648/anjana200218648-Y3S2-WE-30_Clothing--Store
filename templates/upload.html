@@ -3,37 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Upload Sales Data</title>
+    <title>Sales Prediction</title>
 </head>
 <body>
     <h1>Upload Sales Data</h1>
-    <form id="uploadForm" enctype="multipart/form-data">
-        <input type="file" id="fileInput" name="file" accept=".csv">
-        <button type="button" onclick="uploadFile()">Upload</button>
+    {% if message %}
+        <p style="color:green;">{{ message }}</p>
+    {% endif %}
+    {% if error %}
+        <p style="color:red;">{{ error }}</p>
+    {% endif %}
+
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" required>
+        <button type="submit">Upload</button>
     </form>
-    <div id="result"></div>
 
-    <h2>Prediction Result:</h2>
-    <p id="prediction">{{ prediction if prediction else "No prediction yet." }}</p>
-
-    <h3>Uploaded Data:</h3>
-    <table>
-        <thead>
-            <tr>
-                <th>Date</th>
-                <th>Sales</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for row in data %}
-                <tr>
-                    <td>{{ row['Date'] }}</td>
-                    <td>{{ row['Sales'] }}</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-
-    <script src="script.js"></script>
+    {% if prediction is not none %}
+        <h2>Next Month Prediction: {{ prediction }}</h2>
+    {% endif %}
 </body>
 </html>
