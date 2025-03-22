@@ -85,7 +85,7 @@
     </div>
 
     <script>
-        // Always play the intro video for testing purposes (skips localStorage check)
+        
         if (window.location.pathname === '/') {
             // Event listener for the intro video end
             document.getElementById('introVideo').addEventListener('ended', function() {
@@ -93,7 +93,7 @@
                 document.getElementById('introVideoContainer').style.display = 'none';
                 document.getElementById('uploadSection').style.display = 'flex';
                 
-                // Optionally, set localStorage flag to indicate intro video has been played
+                
                 localStorage.setItem('introVideoPlayed', 'true');
             });
         } else {
