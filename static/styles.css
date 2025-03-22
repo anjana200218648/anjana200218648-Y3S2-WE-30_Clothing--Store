@@ -1,15 +1,23 @@
 body {
-    background-color: #f8f9fa;
+    background: linear-gradient(270deg, #ff7e5f, #feb47b);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
+}
+
+@keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
 .container {
     max-width: 600px;
     margin: 100px auto;
     padding: 20px;
-    background: white;
+    background: rgba(255, 255, 255, 0.9);
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     text-align: center;
@@ -17,6 +25,13 @@ body {
 
 h1 {
     color: #333;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-10px); }
+    60% { transform: translateY(-5px); }
 }
 
 .success {

@@ -3,13 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sales Prediction</title>
+    <title>Sales Tracker</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        .video-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: black;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .video-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+
+        .intro-video-container {
+            z-index: 2;
+        }
+
+        .container {
+            z-index: 3;
+            display: none;
+            position: relative;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Upload Sales Data</h1>
+
+    <!-- Intro Video -->
+    <div class="video-container intro-video-container" id="introVideoContainer">
+        <video id="introVideo" autoplay muted>
+            <source src="/static/intro.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <!-- Background Video -->
+    <div class="video-container">
+        <video autoplay muted loop>
+            <source src="/static/background.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <!-- Upload Section -->
+    <div class="container" id="uploadSection">
+        <h1 class="animated-header">Sales Tracker</h1>
         {% if message %}
             <p class="success">{{ message }}</p>
         {% endif %}
@@ -29,5 +83,25 @@
             <h2 class="prediction">Next Month Prediction: <span>{{ prediction }}</span></h2>
         {% endif %}
     </div>
+
+    <script>
+        // Always play the intro video for testing purposes (skips localStorage check)
+        if (window.location.pathname === '/') {
+            // Event listener for the intro video end
+            document.getElementById('introVideo').addEventListener('ended', function() {
+                // Hide the intro video and show the upload section
+                document.getElementById('introVideoContainer').style.display = 'none';
+                document.getElementById('uploadSection').style.display = 'flex';
+                
+                // Optionally, set localStorage flag to indicate intro video has been played
+                localStorage.setItem('introVideoPlayed', 'true');
+            });
+        } else {
+            // If we're not on the homepage, skip intro video and show the upload section
+            document.getElementById('introVideoContainer').style.display = 'none';
+            document.getElementById('uploadSection').style.display = 'flex';
+        }
+    </script>
+
 </body>
 </html>
