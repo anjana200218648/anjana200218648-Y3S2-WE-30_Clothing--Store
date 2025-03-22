@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-
+//add 
 const clothSchema = new mongoose.Schema({
     name: { type: String, required: true },
     description: { type: String, required: true },
