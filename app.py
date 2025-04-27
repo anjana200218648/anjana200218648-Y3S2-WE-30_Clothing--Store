@@ -91,9 +91,9 @@ def upload_file():
 
         return render_template('upload.html', message="File uploaded and model retrained successfully!",
                                prediction=prediction if prediction is not None else "Prediction not available due to insufficient data variance.",
-                               data=df_combined.to_dict(orient='records'))
+                               data=df_combined.to_dict(orient='records')) ## Render the upload page with success message and prediction
     except Exception as e:
-        return render_template('upload.html', error=str(e))
+        return render_template('upload.html', error=str(e)) ## Render the upload page with error message
 
 if __name__ == '__main__':
     app.run(debug=True)
