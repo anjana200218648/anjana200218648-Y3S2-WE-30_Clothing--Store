@@ -39,7 +39,7 @@ def train_and_save_model():
 
         # 🔹 Train ARIMA Model
         model = ARIMA(df['Sales'], order=(2, 1, 1))  # Adjusted order
-        fitted_model = model.fit()
+        fitted_model = model.fit() ## Fit the model
 
         # 🔹 Save the trained model
         with open("sales_forecast_model.pkl", "wb") as f:
