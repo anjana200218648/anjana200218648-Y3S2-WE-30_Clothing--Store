@@ -57,7 +57,7 @@ def train_and_save_model():
 # 🔹 Home Route - Show Upload Page
 @app.route('/')
 def home():
-    return render_template('upload.html')
+    return render_template('upload.html') ## Render the upload page
 
 # 🔹 File Upload API - Handles File Upload and Model Training
 @app.route('/upload', methods=['POST'])
