@@ -96,4 +96,4 @@ def upload_file():
         return render_template('upload.html', error=str(e)) ## Render the upload page with error message
 
 if __name__ == '__main__': ## Run the Flask app
-    app.run(debug=True)
+    app.run(debug=True) ## Set debug to True for development
