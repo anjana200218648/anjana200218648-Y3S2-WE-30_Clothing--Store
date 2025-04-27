@@ -1,0 +1,17 @@
+.header-contents h2{
+    font-weight: 500;
+    font-size: max(2.5vw,22px);
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.header-contents button{
+    border: none;
+    color: gray;
+    font-weight: 500;
+    padding: 0.5vw 1.8vw;
+    background-color: white;
+    font-size: max(1vw,13px);
+    border-radius: 50px;
+}
