@@ -27,7 +27,7 @@ def train_and_save_model():
             if 'Total Amount' in df.columns: ## Check if 'Total Amount' exists
                 df.rename(columns={'Total Amount': 'Sales'}, inplace=True)
             else:
-                raise ValueError("Data must contain either 'Sales' or 'Total Amount' column.")
+                raise ValueError("Data must contain either 'Sales' or 'Total Amount' column.") ## Raise error if neither column exists
 
         # 🔹 Group by 'Month' and calculate total sal
         df = df.groupby('Month').sum(numeric_only=True)
