@@ -51,7 +51,7 @@ def train_and_save_model():
         forecast = fitted_model.forecast(steps=1)
         return round(forecast[0], 2)  # Round prediction
     except Exception as e:
-        print(f"Error training the model: {str(e)}")
+        print(f"Error training the model: {str(e)}") ## Log error
         return None  # Return None on failure
 
 # 🔹 Home Route - Show Upload Page
