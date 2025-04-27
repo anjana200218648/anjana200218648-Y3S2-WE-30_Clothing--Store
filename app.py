@@ -69,9 +69,9 @@ def upload_file():
     if file.filename == '': ## Check if filename is empty
         return jsonify({'error': 'No selected file'}), 400
 
-    filename = secure_filename(file.filename)
+    filename = secure_filename(file.filename) ## Secure the filename
     filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-    file.save(filepath)
+    file.save(filepath) ## Save the file
 
     try:
         df_new = pd.read_csv(filepath)
