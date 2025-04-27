@@ -62,7 +62,7 @@ def home():
 # 🔹 File Upload API - Handles File Upload and Model Training
 @app.route('/upload', methods=['POST'])
 def upload_file():
-    if 'file' not in request.files:
+    if 'file' not in request.files: ## Check if file part is in request
         return jsonify({'error': 'No file part'}), 400
 
     file = request.files['file']
