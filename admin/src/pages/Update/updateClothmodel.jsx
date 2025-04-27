@@ -69,6 +69,7 @@ import { toast } from 'react-toastify';
 import './updateClothmodel.css' // Import the CSS file
 
 const UpdateClothModal = ({ cloth, onClose, onUpdate }) => {
+    // Initialize form data with existing cloth details
     const [formData, setFormData] = useState({
         name: cloth.name,
         description: cloth.description,
