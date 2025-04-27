@@ -95,5 +95,5 @@ def upload_file():
     except Exception as e:
         return render_template('upload.html', error=str(e)) ## Render the upload page with error message
 
-if __name__ == '__main__':
+if __name__ == '__main__': ## Run the Flask app
     app.run(debug=True)
