@@ -84,7 +84,7 @@ def upload_file():
 
         # 🔹 Combine new data with existing data
         df_combined = pd.concat([df_existing, df_new], ignore_index=True)
-        df_combined.to_csv("sales_data.csv", index=False)
+        df_combined.to_csv("sales_data.csv", index=False) ## Save the combined data
 
         # 🔹 Retrain the model with the combined data
         prediction = train_and_save_model()
