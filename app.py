@@ -24,7 +24,7 @@ def train_and_save_model():
 
         # sales not in df.columns    
         if 'Sales' not in df.columns:
-            if 'Total Amount' in df.columns:
+            if 'Total Amount' in df.columns: ## Check if 'Total Amount' exists
                 df.rename(columns={'Total Amount': 'Sales'}, inplace=True)
             else:
                 raise ValueError("Data must contain either 'Sales' or 'Total Amount' column.")
