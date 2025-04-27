@@ -22,6 +22,7 @@ const Add = ({url}) => {
 
     const onSubmitHandler = async (event) => {
         event.preventDefault();
+        // Prepare data to send
         const formData = new FormData();
         formData.append("name", data.name)
         formData.append("description", data.description)
