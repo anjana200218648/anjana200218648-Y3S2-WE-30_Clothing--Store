@@ -113,6 +113,6 @@ project_folder/ │ ├── app.py # Flask application ├── sales_data.cs
    ```bash
    pip install flask pandas statsmodels
 ## Run the Flask app:
-###python app.py
+### 'python app.py'
 
 
