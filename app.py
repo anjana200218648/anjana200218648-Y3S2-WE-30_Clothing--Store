@@ -13,7 +13,7 @@ os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 if not os.path.exists("sales_data.csv"):
     pd.DataFrame(columns=["Date", "Sales"]).to_csv("sales_data.csv", index=False)
 
-# 🔹 Function to Train and Save the Model
+# 🔹 Function to Train 
 def train_and_save_model():
     try:
         df = pd.read_csv("sales_data.csv")
