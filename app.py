@@ -22,7 +22,7 @@ def train_and_save_model():
         df['Date'] = pd.to_datetime(df['Date'], errors='coerce')
         df['Month'] = df['Date'].dt.to_period('M')  # Extract Year-M
 
-        # 🔹 Ensure 'Sales' column is p
+        # 🔹 Ensure 'Sales' column is
         if 'Sales' not in df.columns:
             if 'Total Amount' in df.columns:
                 df.rename(columns={'Total Amount': 'Sales'}, inplace=True)
