@@ -34,7 +34,7 @@ def train_and_save_model():
 
         # 🔹 Check for sufficient data variance
         if df['Sales'].nunique() < 2:
-            print("⚠ Not enough data variance for training!")
+            print("⚠ Not enough data variance for training!") ## Log warning
             return None  # Return None instead of error
 
         # 🔹 Train ARIMA Model
