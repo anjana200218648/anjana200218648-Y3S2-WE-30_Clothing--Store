@@ -9,7 +9,7 @@ app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'uploads'
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
-# 🔹 Ensure sales_data.csv exists
+
 if not os.path.exists("sales_data.csv"):
     pd.DataFrame(columns=["Date", "Sales"]).to_csv("sales_data.csv", index=False)
 
