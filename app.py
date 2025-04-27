@@ -74,11 +74,11 @@ def upload_file():
     file.save(filepath) ## Save the file
 
     try:
-        df_new = pd.read_csv(filepath)
+        df_new = pd.read_csv(filepath) 
 
         # 🔹 Rename "Total Amount" -> "Sales" if needed
         if 'Sales' not in df_new.columns and 'Total Amount' in df_new.columns:
-            df_new.rename(columns={'Total Amount': 'Sales'}, inplace=True)
+            df_new.rename(columns={'Total Amount': 'Sales'}, inplace=True) ## Rename column if needed
 
         df_existing = pd.read_csv("sales_data.csv")
 
