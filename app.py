@@ -20,7 +20,7 @@ def train_and_save_model():
 
          
         df['Date'] = pd.to_datetime(df['Date'], errors='coerce')
-        df['Month'] = df['Date'].dt.to_period('M')  # Extract Year-Month
+        df['Month'] = df['Date'].dt.to_period('M')  # Extract Year-Mon
 
         # 🔹 Ensure 'Sales' column is present
         if 'Sales' not in df.columns:
