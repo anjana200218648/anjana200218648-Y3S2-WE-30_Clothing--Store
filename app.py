@@ -43,7 +43,7 @@ def train_and_save_model():
 
         # 🔹 Save the trained model
         with open("sales_forecast_model.pkl", "wb") as f:
-            pickle.dump(fitted_model, f)
+            pickle.dump(fitted_model, f) ## Save the model to disk
 
         print("✅ Model retrained and saved successfully!")
 
