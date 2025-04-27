@@ -70,4 +70,49 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
 
+# Special Feature
+
+# 📊 Sales Data Tracker and Forecaster
+
+A simple web application built with Flask to upload monthly sales data, retrain a sales forecasting model (ARIMA), and predict the next month's sales.
+
+---
+
+## 🚀 Features
+
+- Upload `.csv` files containing sales data.
+- Automatically merge uploaded data with existing records.
+- Train ARIMA model (order = 2,1,1) after every upload.
+- Predict and display next month's sales forecast.
+- View the combined sales dataset directly on the web page.
+
+---
+
+## 🛠 Technologies Used
+
+- Python
+- Flask
+- Pandas
+- Statsmodels (ARIMA)
+- HTML (Jinja2 templates)
+
+---
+
+## 📂 Project Structure
+project_folder/ │ ├── app.py # Flask application ├── sales_data.csv # Sales data (auto-created if missing) ├── uploads/ # Folder for uploaded CSV files └── templates/ └── upload.html # Upload page template
+
+
+---
+
+## ⚙️ Installation Guide
+
+1. **Clone or download** this repository.
+
+2. **Install required Python packages**:
+
+   ```bash
+   pip install flask pandas statsmodels
+## Run the Flask app:
+###python app.py
+
 
