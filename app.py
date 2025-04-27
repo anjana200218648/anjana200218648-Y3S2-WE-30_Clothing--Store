@@ -18,7 +18,7 @@ def train_and_save_model():
     try:
         df = pd.read_csv("sales_data.csv")
 
-        # 🔹 Convert 'Date' to datetime and create '
+        # 🔹 Convert 'Date' to datetime and create 
         df['Date'] = pd.to_datetime(df['Date'], errors='coerce')
         df['Month'] = df['Date'].dt.to_period('M')  # Extract Year-Month
 
