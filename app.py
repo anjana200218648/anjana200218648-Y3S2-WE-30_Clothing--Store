@@ -45,7 +45,7 @@ def train_and_save_model():
         with open("sales_forecast_model.pkl", "wb") as f:
             pickle.dump(fitted_model, f) ## Save the model to disk
 
-        print("✅ Model retrained and saved successfully!")
+        print("✅ Model retrained and saved successfully!") ## Log success
 
         # 🔹 Predict next month's sales
         forecast = fitted_model.forecast(steps=1)
