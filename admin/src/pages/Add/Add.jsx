@@ -7,6 +7,8 @@ import { toast } from "react-toastify"
 const Add = ({url}) => {
 
     const [image, setImage] = useState(false);
+    
+    // State to manage product data
     const [data, setData] = useState({
         name: "",
         description: "",
