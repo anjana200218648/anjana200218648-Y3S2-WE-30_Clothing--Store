@@ -1,0 +1,11 @@
+Transaction ID,Date,Customer ID,Gender,Age,Product Category,Quantity,Price per Unit,Total Amount
+12017.0,2025-01-01,CUST312,Male,47.0,Electronics,2.0,277.0,554.0
+56391.0,2025-02-01,CUST417,Male,22.0,Groceries,3.0,267.0,801.0
+41752.0,2025-03-01,CUST262,Female,43.0,Beauty,4.0,126.0,504.0
+51416.0,2025-04-01,CUST717,Male,48.0,Groceries,3.0,400.0,1200.0
+22498.0,2025-05-01,CUST257,Male,29.0,Beauty,2.0,182.0,364.0
+11695.0,2025-06-01,CUST793,Male,20.0,Beauty,2.0,492.0,984.0
+39182.0,2025-07-01,CUST504,Female,38.0,Beauty,2.0,108.0,216.0
+37960.0,2025-08-01,CUST389,Female,53.0,Groceries,2.0,366.0,732.0
+42825.0,2025-09-01,CUST264,Male,60.0,Clothing,1.0,220.0,220.0
+,,,,,,,,
