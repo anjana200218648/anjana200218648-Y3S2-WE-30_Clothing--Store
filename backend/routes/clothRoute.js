@@ -1,6 +1,9 @@
 import express from "express";
 import { addCloth, listCloth, removeCloth, updateCloth } from "../controllers/clothController.js";
+
+//multer is using for store images in db
 import multer from "multer";
+
 
 const clothRouter = express.Router();
 
