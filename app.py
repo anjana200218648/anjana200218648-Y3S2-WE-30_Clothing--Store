@@ -22,14 +22,14 @@ def train_and_save_model():
         df['Date'] = pd.to_datetime(df['Date'], errors='coerce')
         df['Month'] = df['Date'].dt.to_period('M')   
 
-            
+        # sales not in df.columns    
         if 'Sales' not in df.columns:
             if 'Total Amount' in df.columns:
                 df.rename(columns={'Total Amount': 'Sales'}, inplace=True)
             else:
                 raise ValueError("Data must contain either 'Sales' or 'Total Amount' column.")
 
-        # 🔹 Group by 'Month' and calculate total sales
+        # 🔹 Group by 'Month' and calculate total sal
         df = df.groupby('Month').sum(numeric_only=True)
 
         # 🔹 Check for sufficient data variance
