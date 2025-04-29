@@ -7,7 +7,7 @@ accountRouter.get("/",getAllAccount)
 
 accountRouter.post("/",saveAccount)
 
-studentRouter.put("/",updateAccount)
+accountRouter.put("/",updateAccount)
 
 studentRouter.delete("/",deleteAccount)
 
