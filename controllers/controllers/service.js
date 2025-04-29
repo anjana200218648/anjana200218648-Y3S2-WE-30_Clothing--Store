@@ -1,7 +1,7 @@
 import Service from "../models/account.js"
 
-export function saveItem(req,res){
-  const item = new Item(req.body)
+export function saveService(req,res){
+  const item = new Service(req.body)
   item.save().then(//methana thiyena save fuction eka  mogoose eke thiina model save wenna  thama eeka hadannne  
     ()=>{
         res.json({
