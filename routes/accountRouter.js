@@ -5,7 +5,7 @@ const accountRouter = express.Router();
 
 accountRouter.get("/",getAllAccount)
 
-studentRouter.post("/",saveAccount)
+accountRouter.post("/",saveAccount)
 
 studentRouter.put("/",updateAccount)
 
