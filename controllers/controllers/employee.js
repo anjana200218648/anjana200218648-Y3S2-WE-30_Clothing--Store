@@ -42,8 +42,8 @@ export function loginEmployee(req, res) {
                     lastName: employee.lastName,
                     role: employee.role,
                     phone: employee.phone,
-                    isdDisabled: user.isdDisabled,
-                    isEmailVerified: user.isEmailVerified
+                    isdDisabled: employee.isdDisabled,
+                    isEmailVerified: employee.isEmailVerified
                 };
 
                 const token = jwt.sign(userData, "random356");
