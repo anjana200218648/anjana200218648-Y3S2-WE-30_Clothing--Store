@@ -1,4 +1,4 @@
-import Item from "../models/account.js"
+import Service from "../models/account.js"
 
 export function saveItem(req,res){
   const item = new Item(req.body)
