@@ -9,7 +9,7 @@ accountRouter.post("/",saveAccount)
 
 accountRouter.put("/",updateAccount)
 
-studentRouter.delete("/",deleteAccount)
+accountRouter.delete("/",deleteAccount)
 
 
 export default studentRouter;
