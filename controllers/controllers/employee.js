@@ -28,7 +28,7 @@ export function loginEmployee(req, res) {
     const email = req.body.email;
     const password = req.body.password;
 
-    User.findOne({ email: email }).then((employee) => {
+    Employee.findOne({ email: email }).then((employee) => {
         if (employee == null) {
             res.status(404).json({
                 message: "Email not found"
