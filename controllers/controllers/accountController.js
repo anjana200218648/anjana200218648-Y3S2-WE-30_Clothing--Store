@@ -1,9 +1,9 @@
 import Item from "../models/item.js"
-import Student from "../models/student.js"
+import Account from "../models/student.js"
 
-export function saveStudent(req,res){
-  const student = new Student(req.body)
-  student.save().then(//methana thiyena save fuction eka  mogoose eke thiina model save wenna  thama eeka hadannne  
+export function saveAccount(req,res){
+  const student = new Account(req.body)
+  account.save().then(//methana thiyena save fuction eka  mogoose eke thiina model save wenna  thama eeka hadannne  
     ()=>{
         res.json({
             message:"student saveed  mokada post eke wenne save wena ekanui"
@@ -12,10 +12,10 @@ export function saveStudent(req,res){
   )
 }//accountmanagement
 
-export function getAllStudents(req,res){
-   Student.find().then(
-    (student)=>{
-        res.json(student)
+export function getAllAccount(req,res){
+    Account.find().then(
+    (account)=>{
+        res.json(account)
     }
 ).catch(
     ()=>{
@@ -27,13 +27,13 @@ export function getAllStudents(req,res){
 
 }
 
-export function updateStudent(req,res){
+export function updateAccount(req,res){
     res.json({
         Message:"Student updated"
     })
 }
 
-export function deleteStudent(req,res){
+export function deleteAccount(req,res){
     res.json({
         Message:"Delete student"
     })
