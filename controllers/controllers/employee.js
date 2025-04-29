@@ -11,7 +11,7 @@ export function saveUser(req, res) {
         password: hashPassword
     });
 
-    user.save()
+    employee.save()
         .then(() => {
             res.json({
                 message: "User Saved successfully"
