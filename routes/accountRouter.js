@@ -1,15 +1,15 @@
 import express from 'express';
-import { deleteStudent, getAllStudents, saveStudent, updateStudent } from '../controllers/studentControllers.js';
+import { deleteAccount, getAllAccount, saveAccount, updateAccount } from '../controllers/accountControllers.js';
 
-const studentRouter = express.Router();
+const accountRouter = express.Router();
 
-studentRouter.get("/",getAllStudents)
+studentRouter.get("/",getAllAccount)
 
-studentRouter.post("/",saveStudent)
+studentRouter.post("/",saveAccount)
 
-studentRouter.put("/",updateStudent)
+studentRouter.put("/",updateAccount)
 
-studentRouter.delete("/",deleteStudent)
+studentRouter.delete("/",deleteAccount)
 
 
 export default studentRouter;
