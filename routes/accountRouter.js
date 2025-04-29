@@ -12,4 +12,4 @@ accountRouter.put("/",updateAccount)
 accountRouter.delete("/",deleteAccount)
 
 
-export default studentRouter;
+export default accountRouter;
