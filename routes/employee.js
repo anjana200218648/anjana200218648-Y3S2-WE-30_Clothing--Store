@@ -3,7 +3,7 @@ import { loginEmployee, saveemployee } from "../controllers/employeeController.j
 
 const employeeRouter = express.Router();
 
-userRouter.post("/",saveUser)
-userRouter.post("/login",loginUser) //securiti   chek krannath post thama use kranne 
+employeeRouter.post("/",saveEmployee)
+employeeRouter.post("/login",loginEmployee) //securiti   chek krannath post thama use kranne 
 
 export default userRouter;//serviceRouter new
