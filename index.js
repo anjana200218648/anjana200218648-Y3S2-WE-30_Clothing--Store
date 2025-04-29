@@ -31,7 +31,7 @@ app.use((req, res, next) => {
             if (err) {
                 return res.status(401).json({ message: "Unauthorized - Invalid Token" });
             }//body
-            req.user = decoded; // Attach decoded token to request
+            req.employee = decoded; // Attach decoded token to request
             next();
         });
     } else {
@@ -40,8 +40,8 @@ app.use((req, res, next) => {
 });
 
 // Protected Routes (Need JWT)
-app.use("/api/student", studentRouter);
-app.use("/api/item", itemRouter);
+app.use("/api/account", accountRouter);
+app.use("/api/service", serviceRouter);
 
 // Server Listen
 app.listen(3000, () => {
