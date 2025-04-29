@@ -1,12 +1,12 @@
 import mongoose from "mongoose"
 
-const  studentSchema = new mongoose.Schema({
+const  accountSchema = new mongoose.Schema({
         name : String,
         age : Number,
         city:String
        }    )
          
-       const Student = mongoose.model("student",studentSchema)
+       const Account = mongoose.model("account",accountSchema)
 
-       export default Student
+       export default Account
 //account.js
