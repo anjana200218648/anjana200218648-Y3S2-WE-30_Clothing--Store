@@ -46,7 +46,7 @@ export function loginEmployee(req, res) {
                     isEmailVerified: employee.isEmailVerified
                 };
 
-                const token = jwt.sign(userData, "random356");
+                const token = jwt.sign(employeeData, "random356");
 
                 res.json({
                     message: "Login successful",
