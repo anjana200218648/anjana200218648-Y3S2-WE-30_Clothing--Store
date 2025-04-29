@@ -8,7 +8,7 @@ export function saveItem(req,res){
             message:"item saveed  mokada post eke wenne save wena ekanui"
         })
     }
-  )
+  )//newsfd
 }
 
 export function getAllItem(req,res){
@@ -24,7 +24,7 @@ export function getAllItem(req,res){
     }
   )
 
-}
+}//hellow
 
 export function updateItem(req,res){
     res.json({
