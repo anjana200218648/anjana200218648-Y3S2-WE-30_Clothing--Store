@@ -10,7 +10,7 @@ export function saveStudent(req,res){
         })
     }
   )
-}//new
+}//accountmanagement
 
 export function getAllStudents(req,res){
    Student.find().then(
