@@ -11,7 +11,7 @@ export function saveService(req,res){
   )//newsfd
 }
 
-export function getAllItem(req,res){
+export function getAllService(req,res){
    Item.find().then(
     (item)=>{
         res.json(item)
@@ -26,19 +26,19 @@ export function getAllItem(req,res){
 
 }//hellow
 
-export function updateItem(req,res){
+export function updateService(req,res){
     res.json({
         Message:"Student updated"
     })//export
 }
 
-export function deleteItem(req,res){
+export function deleteService(req,res){
     res.json({
         Message:"Delete student"
     })
 }
 
-export function searchItem(req,res){
+export function searchService(req,res){
 
     //const itemName = req.body.name;    meeka dmme bn nama yatin gahala search karanna dn balamu  araka 
     //url ekeenama adaala eka gahala search karamma balamu api dan 
