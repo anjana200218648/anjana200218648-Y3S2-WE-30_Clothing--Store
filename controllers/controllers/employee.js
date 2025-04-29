@@ -34,7 +34,7 @@ export function loginEmployee(req, res) {
                 message: "Email not found"
             });
         } else {
-            const isPasswordCorrect = bcrypt.compareSync(password, user.password);
+            const isPasswordCorrect = bcrypt.compareSync(password, employee.password);
             if (isPasswordCorrect) {
                 const userData = {
                     email: user.email,
