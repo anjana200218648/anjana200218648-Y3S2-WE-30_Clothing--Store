@@ -30,7 +30,7 @@ app.use((req, res, next) => {
         jwt.verify(token, "random456", (err, decoded) => {
             if (err) {
                 return res.status(401).json({ message: "Unauthorized - Invalid Token" });
-            }
+            }//body
             req.user = decoded; // Attach decoded token to request
             next();
         });
