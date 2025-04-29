@@ -1,12 +1,12 @@
 import mongoose from "mongoose"
 
-const  itemSchema = new mongoose.Schema({
+const  serviceSchema = new mongoose.Schema({
         name : String,
         value : Number,
         description:String
        }    )
          
-       const Item = mongoose.model("item",itemSchema)
+       const Service = mongoose.model("service",serviceSchema)
 
-       export default Item
-  //employee.js
+       export default Service
+  
