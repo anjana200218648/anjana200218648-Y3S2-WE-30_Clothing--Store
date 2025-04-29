@@ -29,7 +29,7 @@ export function getAllItem(req,res){
 export function updateItem(req,res){
     res.json({
         Message:"Student updated"
-    })
+    })//export
 }
 
 export function deleteItem(req,res){
