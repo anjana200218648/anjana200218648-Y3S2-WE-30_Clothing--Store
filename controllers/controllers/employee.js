@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 //acount
 export function saveUser(req, res) {
     const hashPassword = bcrypt.hashSync(req.body.password, 10);
-    const user = new User({
+    const user = new Employee({
         email: req.body.email,
         firstName: req.body.firstName,
         lastName: req.body.lastName,
@@ -24,7 +24,7 @@ export function saveUser(req, res) {
         });
 }
 
-export function loginUser(req, res) {
+export function loginEmployee(req, res) {
     const email = req.body.email;
     const password = req.body.password;
 
