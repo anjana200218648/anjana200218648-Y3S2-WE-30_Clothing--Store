@@ -1,9 +1,9 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
-import studentRouter from './routes/studentRouter.js';
-import itemRouter from './routes/itemRouter.js';
-import userRouter from './routes/userRouter.js';
+import acccoutRouter from './routes/accountRouter.js';
+import serviceRouter from './routes/serviceRouter.js';
+import employeeRouter from './routes/employeeRouter.js';
 import jwt from "jsonwebtoken";
 
 const app = express();

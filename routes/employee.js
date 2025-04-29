@@ -6,4 +6,4 @@ const employeeRouter = express.Router();
 employeeRouter.post("/",saveEmployee)
 employeeRouter.post("/login",loginEmployee) //securiti   chek krannath post thama use kranne 
 
-export default userRouter;//serviceRouter new
+export default employeeRouter;//serviceRouter new
