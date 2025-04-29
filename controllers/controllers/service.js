@@ -1,18 +1,18 @@
 import Service from "../models/account.js"
 
 export function saveService(req,res){
-  const item = new Service(req.body)
-  item.save().then(//methana thiyena save fuction eka  mogoose eke thiina model save wenna  thama eeka hadannne  
+  const service = new Service(req.body)
+  service.save().then(//methana thiyena save fuction eka  mogoose eke thiina model save wenna  thama eeka hadannne  
     ()=>{
         res.json({
-            message:"item saveed  mokada post eke wenne save wena ekanui"
+            message:"service saveed  mokada post eke wenne save wena ekanui"
         })
     }
   )//newsfd
 }
 
 export function getAllService(req,res){
-   Item.find().then(
+    Service.find().then(
     (item)=>{
         res.json(item)
     }
