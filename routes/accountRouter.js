@@ -3,7 +3,7 @@ import { deleteAccount, getAllAccount, saveAccount, updateAccount } from '../con
 
 const accountRouter = express.Router();
 
-studentRouter.get("/",getAllAccount)
+accountRouter.get("/",getAllAccount)
 
 studentRouter.post("/",saveAccount)
 
