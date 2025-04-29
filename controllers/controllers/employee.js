@@ -2,7 +2,7 @@ import Employee from "../models/employee.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 //acount
-export function saveUser(req, res) {
+export function saveEmployee(req, res) {
     const hashPassword = bcrypt.hashSync(req.body.password, 10);
     const employee = new Employee({
         email: req.body.email,
@@ -19,7 +19,7 @@ export function saveUser(req, res) {
         })
         .catch(() => {
             res.json({
-                message: "User not saved"
+                message: "employee not saved"
             });
         });
 }
