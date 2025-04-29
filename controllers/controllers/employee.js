@@ -36,12 +36,12 @@ export function loginEmployee(req, res) {
         } else {
             const isPasswordCorrect = bcrypt.compareSync(password, employee.password);
             if (isPasswordCorrect) {
-                const userData = {
-                    email: user.email,
-                    firstName: user.firstName,
-                    lastName: user.lastName,
-                    role: user.role,
-                    phone: user.phone,
+                const employeeData = {
+                    email: employee.email,
+                    firstName: employee.firstName,
+                    lastName: employee.lastName,
+                    role: employee.role,
+                    phone: employee.phone,
                     isdDisabled: user.isdDisabled,
                     isEmailVerified: user.isEmailVerified
                 };
