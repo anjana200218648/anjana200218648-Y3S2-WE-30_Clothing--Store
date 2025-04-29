@@ -13,8 +13,8 @@ export function saveService(req,res){
 
 export function getAllService(req,res){
     Service.find().then(
-    (item)=>{
-        res.json(item)
+    (service)=>{
+        res.json(service)
     }
 ).catch(
     ()=>{
@@ -43,13 +43,13 @@ export function searchService(req,res){
     //const itemName = req.body.name;    meeka dmme bn nama yatin gahala search karanna dn balamu  araka 
     //url ekeenama adaala eka gahala search karamma balamu api dan 
 
-    const itemName = req.params.name; 
-    Item.find(
+    const serviceName = req.params.name; 
+    Service.find(
         {
-            name : itemName
+            name : serviceName
         }
-    ).then ((item)=>{
-            res.json(item)
+    ).then ((service)=>{
+            res.json(service)
         }
     ).catch(
         ()=>{
