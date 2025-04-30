@@ -13,7 +13,7 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage: storage });
-
+//api 
 clothRouter.post("/add", upload.single("image"), addCloth);
 clothRouter.get("/list", listCloth);
 clothRouter.post("/remove", removeCloth);
