@@ -1,7 +1,7 @@
 import express from "express"// Express framework for building the server
 import cors from "cors"
-import { connectDB } from "./config/db.js"
-import clothRouter from "./routes/clothRoute.js"
+import { connectDB } from "./config/db.js"// Function to connect to MongoDB
+import clothRouter from "./routes/clothRoute.js"// Router handling clothing-related endpoints
 import userRouter from "./routes/userRoute.js"
 import 'dotenv/config'
 import cartRouter from "./routes/cartRoute.js"
