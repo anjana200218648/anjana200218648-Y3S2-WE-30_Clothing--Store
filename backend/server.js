@@ -1,4 +1,4 @@
-import express from "express"
+import express from "express"// Express framework for building the server
 import cors from "cors"
 import { connectDB } from "./config/db.js"
 import clothRouter from "./routes/clothRoute.js"
