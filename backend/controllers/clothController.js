@@ -13,13 +13,13 @@ const addCloth = async (req, res) => {
         image: image_filename
     });
 
-    try {
-        await cloth.save();
-        res.json({ success: true, message: "Cloth Added" });
-    } catch (error) {
-        console.log(error);
-        res.json({ success: false, message: "Error" });
-    }
+    // try {
+    //     await cloth.save();
+    //     res.json({ success: true, message: "Cloth Added" });
+    // } catch (error) {
+    //     console.log(error);
+    //     res.json({ success: false, message: "Error" });
+    // }
 };
 
 // Show all cloth list
