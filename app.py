@@ -95,6 +95,7 @@ def upload_file():
         # Calculate predictions for each product category
         product_categories = df_combined['Product Category'].unique()
         category_predictions = {}
+        category_sales_data = {}  # To store sales data for each category
 
         for category in product_categories:
             # Filter the data for the current category
@@ -103,7 +104,10 @@ def upload_file():
             # Group by month and calculate total sales per month
             category_data['Date'] = pd.to_datetime(category_data['Date'], errors='coerce', dayfirst=True)
             category_data['Month'] = category_data['Date'].dt.to_period('M')
-            category_sales = category_data.groupby('Month').sum(numeric_only=True)['Total Amount']
+            category_sales = category_data.groupby('Month').sum(numeric_only=True)['Sales']
+
+            # Save sales history for the category
+            category_sales_data[category] = category_sales.tolist()
 
             if category_sales.nunique() < 2:
                 category_predictions[category] = "Not enough data"
@@ -126,7 +130,9 @@ def upload_file():
 
         # Return the results to the template
         return render_template('upload.html', message="File uploaded and model retrained successfully!",
-                               category_predictions=category_predictions, data=df_combined.to_dict(orient='records'))
+                               category_predictions=category_predictions, 
+                               category_sales_data=category_sales_data, 
+                               data=df_combined.to_dict(orient='records'))
 
     except Exception as e:
         return render_template('upload.html', error=str(e))
