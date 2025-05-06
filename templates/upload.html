@@ -6,38 +6,74 @@
     <title>Sales Tracker Dashboard</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <div class="container">
-        <h1>Sales Tracker Dashboard</h1>
+        <div class="header">
+            <h1>Sales Tracker Dashboard</h1>
+            <p>Analyze and predict your sales performance with ease</p>
+        </div>
 
         {% if message %}
-            <div class="success">{{ message }}</div>
+            <div class="alert success">{{ message }}</div>
         {% endif %}
         {% if error %}
-            <div class="error">{{ error }}</div>
+            <div class="alert error">{{ error }}</div>
         {% endif %}
 
-        <form action="/upload" method="post" enctype="multipart/form-data">
-            <div class="file-upload">
-                <input type="file" name="file" id="file" required>
-                <label for="file" class="file-label"><i class="fas fa-upload"></i> Choose CSV File</label>
-            </div>
-            <button type="submit" class="btn">Upload Data</button>
-        </form>
+        <div class="upload-section">
+            <form action="/upload" method="post" enctype="multipart/form-data">
+                <div class="file-upload-wrapper">
+                    <div class="file-upload">
+                        <input type="file" name="file" id="file" required>
+                        <label for="file" class="file-label">
+                            <i class="fas fa-file-csv"></i>
+                            <span>Upload CSV File</span>
+                        </label>
+                    </div>
+                    <button type="submit" class="btn primary">Process Data</button>
+                </div>
+            </form>
+        </div>
 
         <div class="prediction-grid">
             {% if category_predictions %}
                 {% for category, prediction_data in category_predictions.items() %}
-                    <div class="prediction-card" onclick="window.location.href='/category/{{ category }}'">
+                    <div class="prediction-card">
+                        <div class="card-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
                         <h4>{{ category }}</h4>
-                        <p><strong>Next Month Prediction: </strong>${{ prediction_data[0] if prediction_data != "Not enough data" else "N/A" }}</p>
-                        <p><strong>Change from Last Month: </strong>{{ prediction_data[1] if prediction_data != "Not enough data" else "N/A" }}%</p>
+                        <div class="prediction-details">
+                            <div class="detail-item">
+                                <p class="label">Next Month Prediction</p>
+                                <p class="value">${{ prediction_data[0] if prediction_data != "Not enough data" else "N/A" }}</p>
+                            </div>
+                            <div class="detail-item">
+                                <p class="label">Change from Last Month</p>
+                                <p class="value">{{ prediction_data[1] if prediction_data != "Not enough data" else "N/A" }}%</p>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <a href="/category/{{ category }}" class="btn secondary">View Details</a>
+                        </div>
                     </div>
                 {% endfor %}
             {% else %}
-                <p>No predictions available yet. Please upload a valid dataset.</p>
+                <div class="no-data">
+                    <i class="fas fa-info-circle"></i>
+                    <p>No predictions available yet. Please upload a valid dataset.</p>
+                </div>
             {% endif %}
+        </div>
+    </div>
+
+    <!-- Loading Animation -->
+    <div class="preloader">
+        <div class="loader">
+            <div class="spinner"></div>
         </div>
     </div>
 </body>
