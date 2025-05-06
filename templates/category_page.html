@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ category_name }} Sales Data</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>Sales Data for {{ category_name }}</h1>
+    
+    {% if error %}
+        <div style="color: red;">{{ error }}</div>
+    {% else %}
+        <div>
+            <h3>Sales Trend (Line Graph)</h3>
+            <canvas id="salesChart"></canvas>
+        </div>
+        
+        <div>
+            <h3>Sales Distribution (Pie Chart)</h3>
+            <canvas id="salesPieChart"></canvas>
+        </div>
+
+        <div>
+            <h3>Download Sales Data Report</h3>
+            <a href="/download_pdf_report/{{ category_name }}" class="btn">Download PDF</a>
+        </div>
+
+
+        <script>
+            // Line Graph
+            var salesData = {{ category_data | tojson }};
+            var ctx = document.getElementById('salesChart').getContext('2d');
+            var salesChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: salesData.map(function(item) { return item.month; }),
+                    datasets: [{
+                        label: 'Sales Data',
+                        data: salesData.map(function(item) { return item.sales; }),
+                        borderColor: '#28a745',
+                        fill: false,
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: { beginAtZero: true }
+                    }
+                }
+            });
+
+            // Pie Chart
+            var pieData = {{ pie_data | tojson }};
+            var pieCtx = document.getElementById('salesPieChart').getContext('2d');
+            var salesPieChart = new Chart(pieCtx, {
+                type: 'pie',
+                data: {
+                    labels: pieData.map(function(item) { return item.month; }),
+                    datasets: [{
+                        label: 'Sales Distribution',
+                        data: pieData.map(function(item) { return item.sales; }),
+                        backgroundColor: ['#FF5733', '#33FF57', '#3357FF', '#FF33FF'],
+                    }]
+                },
+                options: {
+                    responsive: true
+                }
+            });
+        </script>
+    {% endif %}
+</body>
+</html>
